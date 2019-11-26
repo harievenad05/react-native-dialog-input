@@ -21,6 +21,7 @@ class DialogInput extends React.Component{
     let textProps = this.props.textInputProps || null;
     let modalStyleProps = this.props.modalStyle || {};
     let dialogStyleProps = this.props.dialogStyle || {};
+    let okButtonTextColor = this.props.okButtonColor || {};
     var cancelText = this.props.cancelText || 'Cancel';
     var submitText = this.props.submitText || 'Submit';
     cancelText = (Platform.OS === 'ios')? cancelText:cancelText.toUpperCase();
@@ -51,7 +52,10 @@ class DialogInput extends React.Component{
                   onKeyPress={() => this.setState({ openning: false })}
                   underlineColorAndroid='transparent'
                   placeholder={hintInput}
-                  onChangeText={(inputModal) => this.setState({inputModal})}
+                   onChangeText={(inputModal) => {
+                    this.setState({inputModal})
+                    this.props.onChangeTextHandler(inputModal)
+                  }}
                   value={value}
                   />
               </View>
@@ -69,7 +73,7 @@ class DialogInput extends React.Component{
                     this.props.submitInput(value);
                     this.setState({ inputModal: '',openning: true })
                   }}>
-                  <Text style={styles.btn_modal_right}>{submitText}</Text>
+                  <Text style={{...styles.btn_modal_right, color: okButtonTextColor}}>{submitText}</Text>
                 </TouchableOpacity>
               </View>
             </View>
